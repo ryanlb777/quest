@@ -1,34 +1,14 @@
+# syntax=docker/dockerfile:1
 FROM node:10
 
-MAINTAINER Ryan Lebon <ryan.lebon@ryanlebon.com>
+ENV SECRET_WORD "TwelveFactor"
 
-LABEL com.company.key="ryanlebon"
+COPY package.json package-lock.json* ./
 
-VOLUME /srv/data
+RUN npm install --production
 
-ENV SECRET_WORD "value"
+COPY ./ ./
 
-EXPOSE 80
+EXPOSE 3000
 
-#SHELL ["/bin/sh", "-c"]
-
-
-#ADD src/file.cpp /usr/include/mylib/file.cpp
-
-#ONBUILD RUN /usr/sbin/nologin
-
-#COPY src/file.cpp /usr/include/mylib/file.cpp
-
-#RUN /usr/sbin/nologin
-
-WORKDIR /home/ubuntu
-
-USER ubuntu
-
-ENTRYPOINT top -b
-
-#CMD /usr/bin/default_cmd
-
-STOPSIGNAL SIGTERM
-
-#HEALTHCHECK --interval=15 --timeout=60 --retries=5 CMD [ "/usr/bin/my_health_check_script", "arg_1" ]
+CMD ["node", "src/000.js"]
